@@ -1,1 +1,31 @@
 # LogComp-APS
+
+
+PROGRAM = { CANVAS }, "\n" ;
+
+CANVAS = ( λ | PAINT | SKETCH | FRAME | SHAPE | DRAW ), "\n" ;
+
+PAINT = "mix", PIGMENT, "=", EXPRESSION, ";" ;
+SKETCH = "imagine", "(", EXPRESSION, ")", "{", PROGRAM, "}", [ "otherwise", "{", PROGRAM, "}" ] ;
+FRAME = CYCLE | REPEAT ;
+
+CYCLE = "cycle", "(", EXPRESSION, ")", "{", PROGRAM, "}" ;
+REPEAT = "repeat", "(", "mix", PIGMENT, "=", EXPRESSION, ";", EXPRESSION, ";", "adjust", PIGMENT, "=", EXPRESSION, ")", "{", PROGRAM, "}" ;
+
+SHAPE = "draw", FORM, "(", PARAMETERS, ")", ";" ;
+FORM = "circle" | "square" | "triangle" ;
+PARAMETERS = "position", "(", NUMBER, ",", NUMBER, ")", ",", "size", "(", EXPRESSION, ")", ",", "color", "(", COLOR, ")" ;
+
+DRAW = "draw", "(", EXPRESSION, ")", ";" ;
+
+EXPRESSION = COLOR | PIGMENT | NUMBER | STRING | ( EXPRESSION, BLEND, EXPRESSION ) ;
+COLOR = NUMBER | STRING ;
+BLEND = "+" | "-" | "*" | "/" ;
+
+NUMBER = DIGIT, { DIGIT } ;
+STRING = "\"", { LETTER | DIGIT | SPACE }, "\"" ;
+
+PIGMENT = TONE, { TONE | DIGIT | "_" } ;
+TONE = ( "a" | ... | "z" | "A" | ... | "Z" ) ;
+DIGIT = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+SPACE = " " ;
