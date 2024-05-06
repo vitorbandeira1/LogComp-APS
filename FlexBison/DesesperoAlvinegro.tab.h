@@ -64,7 +64,11 @@ extern int yydebug;
     NAJOGADA = 270,
     VARDECISION = 271,
     FUNCTION = 272,
-    RETURN = 273
+    RETURN = 273,
+    EQ = 274,
+    NE = 275,
+    LT = 276,
+    GT = 277
   };
 #endif
 
@@ -77,7 +81,7 @@ union YYSTYPE
     int ival;
     char *sval;
 
-#line 81 "DesesperoAlvinegro.tab.h"
+#line 85 "DesesperoAlvinegro.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

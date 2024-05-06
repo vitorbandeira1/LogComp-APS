@@ -19,6 +19,7 @@ extern int yylex();
 
 %left '+' '-'
 %left '*' '/'
+%left EQ NE LT GT  // Definindo precedência para operadores relacionais.
 %nonassoc SE ENTAO SENAO  // Tratando 'se então senão' como não associativos para evitar ambiguidades.
 %right '='  // Supondo que você possa ter operadores de atribuição.
 
@@ -110,6 +111,10 @@ expression:
   | expression '-' expression { $$ = $1 - $3; }
   | expression '*' expression { $$ = $1 * $3; }
   | expression '/' expression { $$ = $1 / $3; }
+  | expression EQ expression { $$ = $1 == $3; }
+  | expression NE expression { $$ = $1 != $3; }
+  | expression LT expression { $$ = $1 < $3; }
+  | expression GT expression { $$ = $1 > $3; }
   | NUMBER { $$ = $1; }
   | identifier { $$ = atoi($1); }  // Conversão, se necessário.
   ;
