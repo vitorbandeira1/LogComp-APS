@@ -1,28 +1,54 @@
-PROGRAM = { CANVAS }, "\n" ;
+(* A program is a series of statements *)
+program = { statement } ;
 
-CANVAS = ( λ | PAINT | SKETCH | FRAME | SHAPE | DRAW ), "\n" ;
+(* Statements can be variable declarations, assignments, conditionals, loops, event triggers, or prints *)
+statement = var_declaration | assignment | conditional | loop | event_call | print_statement | comment ;
 
-PAINT = "mix", PIGMENT, "=", EXPRESSION, ";" ;
-SKETCH = "imagine", "(", EXPRESSION, ")", "{", PROGRAM, "}", [ "otherwise", "{", PROGRAM, "}" ] ;
-FRAME = CYCLE | REPEAT ;
+(* Variable Declarations *)
+var_declaration = type , identifier , "é" , expression , ";" ;
 
-CYCLE = "cycle", "(", EXPRESSION, ")", "{", PROGRAM, "}" ;
-REPEAT = "repeat", "(", "mix", PIGMENT, "=", EXPRESSION, ";", EXPRESSION, ";", "adjust", PIGMENT, "=", EXPRESSION, ")", "{", PROGRAM, "}" ;
+(* Assignments *)
+assignment = identifier , "recebe" , expression , ";" ;
 
-SHAPE = "draw", FORM, "(", PARAMETERS, ")", ";" ;
-FORM = "circle" | "square" | "triangle" ;
-PARAMETERS = "position", "(", NUMBER, ",", NUMBER, ")", ",", "size", "(", EXPRESSION, ")", ",", "color", "(", COLOR, ")" ;
+(* Conditional Statements *)
+conditional = "se" , expression , "então" , "{" , { statement } , "}" , [ "senão" , "{" , { statement } , "}" ] , ";" ;
 
-DRAW = "draw", "(", EXPRESSION, ")", ";" ;
+(* Loop Statements *)
+loop = "enquanto" , expression , "faça" , "{" , { statement } , "}" , ";" ;
 
-EXPRESSION = COLOR | PIGMENT | NUMBER | STRING | ( EXPRESSION, BLEND, EXPRESSION ) ;
-COLOR = NUMBER | STRING ;
-BLEND = "+" | "-" | "*" | "/" ;
+(* Event Calls *)
+event_call = "naJogada" , event_name , "{" , { action } , "}" , ";" ;
+event_name = "golDe" | "cartaoPara" | "ChamouNoVar" | "InicioDeJogo" ;
+action = decision_action | "mostra" , string , { "," , expression } , ";" ;
+decision_action = "se" , decision_condition , "então" , "{" , { action } , "}" , [ "senão" , "{" , { action } , "}" ] , ";" ;
+decision_condition = "decisao VAR é" , var_decision , ";" ;
+var_decision = "Anular" | "Confirmar" ;
 
-NUMBER = DIGIT, { DIGIT } ;
-STRING = "\"", { LETTER | DIGIT | SPACE }, "\"" ;
+(* Print Statements *)
+print_statement = "mostra" , string , { "," , expression } , ";" ;
 
-PIGMENT = TONE, { TONE | DIGIT | "_" } ;
-TONE = ( "a" | ... | "z" | "A" | ... | "Z" ) ;
-DIGIT = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
-SPACE = " " ;
+(* Comments *)
+comment = "//" , { any_char - newline } , newline ;
+
+(* Types and Expressions *)
+type = "Ruma" | "Sentimento" | "Torcedor" | "Rival" ;
+expression = simple_expression , { relational_op , simple_expression } ;
+simple_expression = term , { add_op , term } ;
+term = factor , { mul_op , factor } ;
+factor = number | string | identifier | "(" , expression , ")" ;
+
+(* Operators *)
+add_op = "+" | "-" ;
+mul_op = "*" | "/" ;
+relational_op = "<" | ">" | "==" | "!=" ;
+
+(* Basic Tokens *)
+identifier = letter , { letter | digit | "_" } ;
+number = digit , { digit } ;
+string = '"' , { any_char - '"' } , '"' ;
+letter = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z" ;
+digit = "0" | "1" | ... | "9" ;
+any_char = letter | digit | punctuation | whitespace ;
+punctuation = "." | "," | ";" | ":" | "!" | "?" | "(" | ")" | "[" | "]" | "{" | "}" ;
+whitespace = " " | "\t" | "\n" ;
+newline = "\n" ;
