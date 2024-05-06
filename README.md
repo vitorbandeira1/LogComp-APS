@@ -1,57 +1,52 @@
 # LogComp-APS
 
+### Sobre a Linguagem DesesperoAlvinegro
+#### Motivação
 
-(* A program is a series of statements *)
+A linguagem de programação DesesperoAlvinegro foi criada para encapsular a emoção e o desespero vivenciados pelos torcedores do time de futebol Ceará Sporting Club durante os jogos dos últimos anos. Esta linguagem não apenas serve como uma ferramenta de programação prática, mas também como uma forma de expressão cultural e emocional através de algumas gírias regionais, e permitindo também aos desenvolvedores explorar a programação em um contexto divertido e único.
+
+### EBNF para o DesesperoAlvinegro
+```ebnf
 program = { statement } ;
 
-(* Statements can be variable declarations, assignments, conditionals, loops, event triggers, or prints *)
 statement = var_declaration | assignment | conditional | loop | event_call | print_statement | comment ;
 
-(* Variable Declarations *)
-var_declaration = type , identifier , "é" , expression , ";" ;
+var_declaration = type, identifier, "é", expression, ";" ;
 
-(* Assignments *)
-assignment = identifier , "recebe" , expression , ";" ;
+assignment = identifier, "recebe", expression, ";" ;
 
-(* Conditional Statements *)
-conditional = "se" , expression , "então" , "{" , { statement } , "}" , [ "senão" , "{" , { statement } , "}" ] , ";" ;
+conditional = "se", expression, "então", "{", { statement }, "}", [ "senão", "{", { statement }, "}" ], ";" ;
 
-(* Loop Statements *)
-loop = "enquanto" , expression , "faça" , "{" , { statement } , "}" , ";" ;
+loop = "enquanto", expression, "faça", "{", { statement }, "}", ";" ;
 
-(* Event Calls *)
-event_call = "naJogada" , event_name , "{" , { action } , "}" , ";" ;
+event_call = "naJogada", event_name, "{", { action }, "}", ";" ;
 event_name = "golDe" | "cartaoPara" | "ChamouNoVar" | "InicioDeJogo" ;
-action = decision_action | "mostra" , string , { "," , expression } , ";" ;
-decision_action = "se" , decision_condition , "então" , "{" , { action } , "}" , [ "senão" , "{" , { action } , "}" ] , ";" ;
-decision_condition = "decisao VAR é" , var_decision , ";" ;
+action = decision_action | "mostra", string, { ",", expression }, ";" ;
+decision_action = "se", decision_condition, "então", "{", { action }, "}", [ "senão", "{", { action }, "}" ], ";" ;
+decision_condition = "decisao VAR é", var_decision, ";" ;
 var_decision = "Anular" | "Confirmar" ;
 
-(* Print Statements *)
-print_statement = "mostra" , string , { "," , expression } , ";" ;
+print_statement = "mostra", string, { ",", expression }, ";" ;
 
-(* Comments *)
-comment = "//" , { any_char - newline } , newline ;
+comment = "//", { any_char - newline }, newline ;
 
-(* Types and Expressions *)
 type = "Ruma" | "Sentimento" | "Torcedor" | "Rival" ;
-expression = simple_expression , { relational_op , simple_expression } ;
-simple_expression = term , { add_op , term } ;
-term = factor , { mul_op , factor } ;
-factor = number | string | identifier | "(" , expression , ")" ;
+expression = simple_expression, { relational_op, simple_expression } ;
+simple_expression = term, { add_op, term } ;
+term = factor, { mul_op, factor } ;
+factor = number | string | identifier | "(", expression, ")" ;
 
-(* Operators *)
 add_op = "+" | "-" ;
 mul_op = "*" | "/" ;
 relational_op = "<" | ">" | "==" | "!=" ;
 
-(* Basic Tokens *)
-identifier = letter , { letter | digit | "_" } ;
-number = digit , { digit } ;
-string = '"' , { any_char - '"' } , '"' ;
+identifier = letter, { letter | digit | "_" } ;
+number = digit, { digit } ;
+string = '"', { any_char - '"' }, '"' ;
 letter = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z" ;
 digit = "0" | "1" | ... | "9" ;
 any_char = letter | digit | punctuation | whitespace ;
 punctuation = "." | "," | ";" | ":" | "!" | "?" | "(" | ")" | "[" | "]" | "{" | "}" ;
 whitespace = " " | "\t" | "\n" ;
 newline = "\n" ;
+```
